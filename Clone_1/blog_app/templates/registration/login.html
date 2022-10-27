@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends 'blog_app/base.html' %}
+{% block content %}
+    <div class="jumbotron">
+        <h2>Please, log in:</h2>
+        <h3>(Must be a Superuser, please, check it with the site admin)</h3>
+
+        {% if form.errors %}
+            <p>Your username and password didn't match! Please, try again.</p>
+        {% endif %}
+
+        <form action="{% url 'login' %}" method="POST"> <!--as our templates are under blog_app, we don't use 'blog_app:login'-->
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-primary", value="Login">
+            <input type="hidden" name="next" value="{{next}}"> <!--views.login will from the project urls.py will supply the next value-->
+        </form>
+    </div>
+{% endblock %}
